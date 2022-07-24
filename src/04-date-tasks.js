@@ -19,8 +19,8 @@
  *    'Tue, 26 Jan 2016 13:48:02 GMT' => Date()
  *    'Sun, 17 May 1998 03:00:00 GMT+01' => Date()
  */
-function parseDataFromRfc2822(/* value */) {
-  throw new Error('Not implemented');
+function parseDataFromRfc2822(value) {
+  return new Date(value);
 }
 
 /**
@@ -34,8 +34,8 @@ function parseDataFromRfc2822(/* value */) {
  *    '2016-01-19T16:07:37+00:00'    => Date()
  *    '2016-01-19T08:07:37Z' => Date()
  */
-function parseDataFromIso8601(/* value */) {
-  throw new Error('Not implemented');
+function parseDataFromIso8601(value) {
+  return new Date(value);
 }
 
 
@@ -53,8 +53,8 @@ function parseDataFromIso8601(/* value */) {
  *    Date(2012,1,1)    => true
  *    Date(2015,1,1)    => false
  */
-function isLeapYear(/* date */) {
-  throw new Error('Not implemented');
+function isLeapYear(date) {
+  return new Date(date.getFullYear(), 1, 29).getMonth() === 1;
 }
 
 
@@ -96,6 +96,18 @@ function timeSpanToString(/* startDate, endDate */) {
  */
 function angleBetweenClockHands(/* date */) {
   throw new Error('Not implemented');
+  // let hours = date.getHours();
+  // hours = hours > 12 ? hours - 12 : hours;
+  // const minutes = date.getMinutes();
+  // const angleMins = (Math.PI / 60) * minutes;
+  // const angleHours = (Math.PI / 12) * hours;
+  // console.log(hours, minutes);
+  // console.log(angleHours, angleMins);
+  // const result = Math.abs(angleHours - angleMins) > Math.PI
+  //   ? Math.abs(2 * Math.PI - Math.abs(angleHours - angleMins))
+  //   : angleMins - angleHours;
+  // console.log(result);
+  // return result;
 }
 
 
