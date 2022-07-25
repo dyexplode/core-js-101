@@ -27,8 +27,12 @@
  *  21 => 'Fizz'
  *
  */
-function getFizzBuzz(/* num */) {
-  throw new Error('Not implemented');
+function getFizzBuzz(num) {
+  let result = '';
+  if (num % 3 === 0) result += 'Fizz';
+  if (num % 5 === 0) result += 'Buzz';
+  return result === '' ? num : result;
+  // throw new Error('Not implemented');
 }
 
 
@@ -84,8 +88,16 @@ function getSumBetweenNumbers(n1, n2) {
  *   10,1,1   =>  false
  *   10,10,10 =>  true
  */
-function isTriangle(/* a, b, c */) {
-  throw new Error('Not implemented');
+function isTriangle(a, b, c) {
+  const vertexes = [a, b, c];
+  const max = vertexes.reduce((reducer, v) => {
+    let maxV = reducer;
+    if (maxV < v) maxV = v;
+    return maxV;
+  }, 0);
+  vertexes.splice(vertexes.indexOf(max), 1);
+  return max < vertexes[0] + vertexes[1];
+  // throw new Error('Not implemented');
 }
 
 
@@ -152,8 +164,11 @@ function doRectanglesOverlap(/* rect1, rect2 */) {
  *   { center: { x:0, y:0 }, radius:10 },  { x:10, y:10 }   => false
  *
  */
-function isInsideCircle(/* circle, point */) {
-  throw new Error('Not implemented');
+function isInsideCircle(circle, point) {
+  const lenToCenter = Math.sqrt((circle.center.x - point.x) ** 2
+    + (circle.center.y - point.y) ** 2);
+  return circle.radius > lenToCenter;
+  // throw new Error('Not implemented');
 }
 
 
@@ -168,8 +183,20 @@ function isInsideCircle(/* circle, point */) {
  *   'abracadabra'  => 'c'
  *   'entente' => null
  */
-function findFirstSingleChar(/* str */) {
-  throw new Error('Not implemented');
+function findFirstSingleChar(str) {
+  const strArr = str.split('');
+  let result = null;
+  for (let i = 0; i < strArr.length; i += 1) {
+    if (strArr.reduce((count, letter) => {
+      let cc = count;
+      if (letter === strArr[i]) cc += 1;
+      return cc;
+    }, 0) === 1) {
+      result = strArr[i];
+      break;
+    }
+  }
+  return result;
 }
 
 
@@ -195,8 +222,8 @@ function findFirstSingleChar(/* str */) {
  *   5, 3, true, true   => '[3, 5]'
  *
  */
-function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
-  throw new Error('Not implemented');
+function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
+  return `${isStartIncluded ? '[' : '('}${a < b ? a : b}, ${a < b ? b : a}${isEndIncluded ? ']' : ')'}`;
 }
 
 
@@ -212,8 +239,8 @@ function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
  * 'rotator' => 'rotator'
  * 'noon' => 'noon'
  */
-function reverseString(/* str */) {
-  throw new Error('Not implemented');
+function reverseString(str) {
+  return str.split('').reverse().join('');
 }
 
 
@@ -256,6 +283,20 @@ function reverseInteger(num) {
  */
 function isCreditCardNumber(/* ccn */) {
   throw new Error('Not implemented');
+  // let ch = 0;
+  // const num = ccn.toString().replace(/\D/g, '');
+  // const isOdd = num.length % 2 !== 0;
+
+  // if (num === '') return false;
+
+  // for (let i = 0; i < num.length; i += 1) {
+  //   let n = parseInt(num[i], 10);
+
+  //   // eslint-disable-next-line no-cond-assign
+  //   ch += (isOdd || 0) === (i % 2) && (n *= 2) > 9 ? (n - 9) : n;
+  // }
+
+  // return (ch % 10) === 0;
 }
 
 /**
@@ -304,8 +345,20 @@ function getDigitalRoot(num) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  const open = ['[', '{', '<', '('];
+  const close = [']', '}', '>', ')'];
+  const stack = [];
+  if (str.length === 0) return true;
+  for (let i = 0; i < str.length; i += 1) {
+    if (open.includes(str[i])) stack.push(str[i]);
+    if (close.includes(str[i])) {
+      if (open.indexOf(stack.pop()) !== close.indexOf(str[i])) return false;
+    }
+  }
+  if (stack.length === 0) return true;
+  return false;
+  // throw new Error('Not implemented');
 }
 
 
@@ -346,8 +399,30 @@ function toNaryString(num, n) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  const template = [];
+  pathes.forEach((path) => {
+    template.push(path.split('/'));
+  });
+  let result = '';
+  let doing = true;
+  let i = 0;
+  while (doing) {
+    let cdo = doing;
+    const curr = i;
+    const compare = template[0][curr];
+    template.forEach((item) => {
+      if (cdo) cdo = compare === item[curr];
+    });
+    if (cdo) {
+      result += `${compare}/`;
+      i += 1;
+    } else {
+      doing = false;
+      break;
+    }
+  }
+  return result;
 }
 
 
